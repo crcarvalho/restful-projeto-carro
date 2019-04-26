@@ -1,8 +1,9 @@
 const express = require("express");
+const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const CONNECTION_URL = "mongodb+srv://admin:163049@cluster0-gsqin.mongodb.net/projeto-carro?retryWrites=true";
+const CONNECTION_URL = "mongodb://vehiclecontrol:san46480@ds145356.mlab.com:45356/heroku_857jfl69";
 
 //const CONNECTION_URL = "mongodb+srv://admin:alwaysbegintran@cluster0-d7crm.mongodb.net/projeto-carro?retryWrites=true";
 
@@ -112,6 +113,7 @@ app.get('/v1/veiculo/status/:id', function(req, res) {
                             "status": "Em trânsito"
                         } 
  */
+
 app.put('/v1/veiculo/status/:id', function(req, res) {
     carroModel.findOne({ id: req.params.id }, function(erro, carroObj) {
         if (carroObj) {
@@ -170,6 +172,7 @@ app.put('/v1/veiculo/status/:id', function(req, res) {
                         } 
  */
 app.put('/v1/veiculo/porta/:id', function(req, res) {
+
     carroModel.findOne({ id: req.params.id }, function(erro, carroObj) {
         if (carroObj) {
             console.log('>>>>>>>>> Carro: ' + carroObj);
@@ -288,5 +291,6 @@ mongoose.connection.on('error', function(err) {
     console.log('Mongoose default connection error: ' + err);
 });
 
-var porta = process.env.PORT || 8080;
-app.listen(porta);
+app.listen(port);
+
+
