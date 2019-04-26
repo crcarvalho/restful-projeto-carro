@@ -88,6 +88,27 @@ app.post("/v1/veiculo", (req, res) => {
 });
 
 /**
+ *  @description: Recupera lista de todos os carros
+ *  @author: 31SCJ
+ */
+app.get('/v1/veiculos', function(req, res) {
+    carroModel.find({}, function(erro, carros) {
+        var carrosMap = {};
+        if (carros) {
+            console.log('lista de carros: ' + carros);
+            carros.forEach(function(carro) {
+                carrosMap[carro.id] = carro;
+            });
+            res.status(200);
+            res.send(carrosMap);
+        } else {
+            res.status(404);
+            res.send("Carro não encontrado");
+        }
+    });
+})
+
+/**
  *  @description: Recupera o status do veículo atraves do Id
  *  @author: 31SCJ
  *  @param: id (Id do veículo que deseja o status)
@@ -292,5 +313,3 @@ mongoose.connection.on('error', function(err) {
 });
 
 app.listen(port);
-
-
